@@ -39,3 +39,10 @@ std::string totp::generateTOTP(std::string secret, int period, int digits) {
 std::string totp::generateURL(std::string secret, std::string username, std::string issuer, std::string application) {
     return "otpauth://totp/" + (application.empty() ? issuer : application) + ":%2520" + username + "?secret=" + secret + "&issuer=" + issuer;
 }
+
+int totp::time_until_new_period(int period) {
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+    long _time = ms.count() / 1000 % period;
+
+    return 30 - _time;
+}

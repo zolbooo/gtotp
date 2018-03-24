@@ -17,9 +17,14 @@ std::string totp::generateTOTP(std::string secret, int period = 30, int digits =
 ```
 Generate TOTP using existing secret, also you can define update period and number of digits
 ```c++
-std::string generateURL(std::string secret, std::string username, std::string issuer, std::string application = "");
+std::string totp::generateURL(std::string secret, std::string username, std::string issuer, std::string application = "");
 ```
 Generate URL using data to make QR code and simplify scan on mobile devices
+
+```c++
+int totp::time_until_new_period(int period);
+```
+Get time in seconds until new period
 ### Compiling
 Go to the gtotp folder and:
 ```shell
