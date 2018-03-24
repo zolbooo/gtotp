@@ -4,7 +4,7 @@ Simple to use library for generating TOTP
 ### Usage
 Just:
 ```c++
-#include "totp.hpp"
+#include "totp.min.hpp"
 ```
 
 And use functions:

@@ -1,4 +1,4 @@
-#include "totp.hpp"
+#include "totp.min.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -10,11 +10,9 @@ using namespace std;
 
 int main() {
     char action;
-    string login, in_login, password, phash, twoFactorKey, secret;
+    string login, in_login, password, twoFactorKey, secret, uri;
     ofstream passwd_reg("passwd", ios::app);
     ifstream passwd_log;
-
-    string choice, uri;
 
 start:
     cout << "Enter action(h for help): ";
@@ -30,15 +28,7 @@ start:
 
         uri = totp::generateURL(secret, login, "totpapi", "easyTOTP");
         cout << "Your secret is: " << secret << endl;
-        cout << "Would you like to open URL with qr code(Y/n)? ";
-
-        cin >> choice;
-        if (choice == "y" || choice == "Y") {
-            string command = "open ";
-            command += "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" + uri;
-            cout << url << endl;
-            system(command.c_str());
-        }
+        cout << "Open the following link to generate QR code: https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" << uri << endl;
 
         passwd_reg << login << ' ' << secret << endl;
         break;
@@ -53,7 +43,7 @@ start:
         cin >> in_login;
 
         while (!passwd_log.eof() && login != in_login)
-            passwd_log >> login >> phash >> secret;
+            passwd_log >> login >> secret;
 
         cout << "Enter Guard code: ";
         cin >> twoFactorKey;
