@@ -26,7 +26,7 @@ start:
         password = getpass("Enter password: ");
         secret = totp::generateSecret(password);
 
-        cout << "Here's your secret: " << secret << endl;
+        cout << totp::generateURL(secret, login, "totpapi", "Test%20application") << endl;
 
         passwd_reg << login << ' ' << secret << endl;
         break;
