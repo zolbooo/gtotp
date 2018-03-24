@@ -32,7 +32,7 @@ start:
         break;
     case 'g':
         secret = getpass("Enter secret: ");
-        cout << "Your code is: " << totp::generate(secret) << endl;
+        cout << "Your code is: " << totp::generateTOTP(secret) << endl;
         break;
     case 'l':
         passwd_log.open("passwd");
@@ -46,7 +46,7 @@ start:
         cout << "Enter Guard code: ";
         cin >> twoFactorKey;
 
-        if (twoFactorKey != totp::generate(secret)) {
+        if (twoFactorKey != totp::generateTOTP(secret)) {
             cout << "Login failed" << endl;
             goto start;
         }
