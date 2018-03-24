@@ -5,7 +5,7 @@ std::string totp::generateSecret(std::string password) {
 
     return std::string(digest.begin(), digest.begin() + 16);
 }
-std::string totp::generate(std::string secret, int period, int digits) {
+std::string totp::generateTOTP(std::string secret, int period, int digits) {
     auto key = b32decode(secret);
 
     std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
