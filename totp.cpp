@@ -37,5 +37,5 @@ std::string totp::generateTOTP(std::string secret, int period, int digits) {
     return result;
 }
 std::string totp::generateURL(std::string secret, std::string username, std::string issuer, std::string application) {
-    return "otpauth://totp/" + (application.empty() ? issuer : application) + "%20" + username + "?secret=" + secret + "&issuer=" + issuer;
+    return "otpauth://totp/" + (application.empty() ? issuer : application) + ":%2520" + username + "?secret=" + secret + "&issuer=" + issuer;
 }

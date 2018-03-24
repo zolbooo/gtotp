@@ -14,6 +14,8 @@ int main() {
     ofstream passwd_reg("passwd", ios::app);
     ifstream passwd_log;
 
+    string choice, uri;
+
 start:
     cout << "Enter action(h for help): ";
     cin >> action;
@@ -26,7 +28,17 @@ start:
         password = getpass("Enter password: ");
         secret = totp::generateSecret(password);
 
-        cout << totp::generateURL(secret, login, "totpapi", "Test%20application") << endl;
+        uri = totp::generateURL(secret, login, "totpapi", "easyTOTP");
+        cout << "Your secret is: " << secret << endl;
+        cout << "Would you like to open URL with qr code(Y/n)? ";
+
+        cin >> choice;
+        if (choice == "y" || choice == "Y") {
+            string command = "open ";
+            command += "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" + uri;
+            cout << url << endl;
+            system(command.c_str());
+        }
 
         passwd_reg << login << ' ' << secret << endl;
         break;
