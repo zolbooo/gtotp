@@ -3,8 +3,8 @@
 inline int b32toi(char c) {
     if (c >= 'A' && c <= 'Z')
         return c - 'A';
-    else if (c >= '0' && c <= '9')
-        return 26 + (c - '0');
+    else
+        return 26 + (c - '2');
 }
 std::vector<uint8_t> b32decode(std::string data) {
     std::vector<uint8_t> result;
@@ -50,7 +50,7 @@ std::vector<uint8_t> b32decode(std::string data) {
 
         index3 = b32toi(data[i + 2]);
         index4 = b32toi(data[i + 3]);
-        result.push_back((index2 & 0b00000011) << 6 | (index3 & 0b00011111) >> 1 | (index4 & 0b00010000) >> 4);
+        result.push_back((index2 & 0b00000011) << 6 | (index3 & 0b00011111) << 1 | (index4 & 0b00010000) >> 4);
         break;
     case 3:
         index1 = b32toi(data[i]);
@@ -60,7 +60,7 @@ std::vector<uint8_t> b32decode(std::string data) {
 
         index3 = b32toi(data[i + 2]);
         index4 = b32toi(data[i + 3]);
-        result.push_back((index2 & 0b00000011) << 6 | (index3 & 0b00011111) >> 1 | (index4 & 0b00010000) >> 4);
+        result.push_back((index2 & 0b00000011) << 6 | (index3 & 0b00011111) << 1 | (index4 & 0b00010000) >> 4);
 
         index5 = b32toi(data[i + 4]);
         result.push_back((index4 & 0b00001111) << 4 | (index5 & 0b00011110) >> 1);
@@ -73,7 +73,7 @@ std::vector<uint8_t> b32decode(std::string data) {
 
         index3 = b32toi(data[i + 2]);
         index4 = b32toi(data[i + 3]);
-        result.push_back((index2 & 0b00000011) << 6 | (index3 & 0b00011111) >> 1 | (index4 & 0b00010000) >> 4);
+        result.push_back((index2 & 0b00000011) << 6 | (index3 & 0b00011111) << 1 | (index4 & 0b00010000) >> 4);
 
         index5 = b32toi(data[i + 4]);
         result.push_back((index4 & 0b00001111) << 4 | (index5 & 0b00011110) >> 1);
@@ -90,10 +90,8 @@ std::vector<uint8_t> b32decode(std::string data) {
 std::string b32encode(std::vector<uint8_t> data) {
     std::string result;
 
-    int pad_size;
+    int pad_size = 0;
     switch (data.size() % 5) {
-    case 0:
-        pad_size = 0;
     case 1:
         pad_size = 6;
         break;
