@@ -2,8 +2,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include <ctime>
+#include <chrono>
 
 #include "sha1-hmac.hpp"
 #include "b32.hpp"

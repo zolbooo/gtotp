@@ -7,7 +7,9 @@ std::string totp::generateSecret(std::string password) {
 }
 std::string totp::generate(std::string secret) {
     auto key = b32decode(secret);
-    auto message = time(NULL) / 30;
+
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+    long message = ms.count() / 1000 / 30; //30 seconds
 
     std::vector<uint8_t> msg(sizeof(message));
     for (int i = sizeof(message) - 1; i >= 0; --i) {
@@ -27,7 +29,7 @@ std::string totp::generate(std::string secret) {
     value %= mod;
 
     std::string result = std::to_string(value);
-    if (result.length() != 6)
+    while (result.length() != 6)
         result = '0' + result;
 
     return result;
