@@ -1,6 +1,5 @@
 #include "totp.min.hpp"
 
-#include <sys/stat.h>
 #include <unistd.h>
 
 #include <iostream>
@@ -48,5 +47,6 @@ prompt:
     }
 
     setenv("SSH_TOTP_VERIFIED", "1", 0);
+    system("bash");
     return 0;
 }

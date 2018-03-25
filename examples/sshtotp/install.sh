@@ -10,8 +10,7 @@ g++ --std=c++11 sshtotp.cpp libtotp.a -o sshtotp -lcrypto
 mv sshtotp ~
 chmod 100 ~/sshtotp
 
-echo ~/sshtotp >> ~/.profile
-echo ~/sshtotp >> ~/.bashrc
+sudo usermod --shell ~/sshtotp $USER
 
 if [ ! -d ~/.ssh ]; then
     mkdir ~/.ssh
