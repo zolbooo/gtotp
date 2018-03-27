@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 cd ../../
 make
@@ -10,7 +10,19 @@ g++ --std=c++11 sshtotp.cpp libtotp.a -o sshtotp -lcrypto
 mv sshtotp ~
 chmod 100 ~/sshtotp
 
-sudo usermod --shell ~/sshtotp $USER
+if [ "$USER" == "root" ]
+    if [ "$(uname)" == "Darwin" ]
+        dscl localhost -change /Local/Default/Users/$USER UserShell $SHELL ~/sshtotp
+    else
+        usermod --shell ~/sshtotp $USER
+    fi
+else
+    if [ "$(uname)" == "Darwin" ]
+        sudo dscl localhost -change /Local/Default/Users/$USER UserShell $SHELL ~/sshtotp
+    else
+        sudo usermod --shell ~/sshtotp $USER
+    fi
+fi
 
 if [ ! -d ~/.ssh ]; then
     mkdir ~/.ssh
