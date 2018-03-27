@@ -20,6 +20,10 @@ Generate TOTP using existing secret, also you can define update period and numbe
 std::string totp::generateURL(std::string secret, std::string username, std::string issuer, std::string application = "");
 ```
 Generate URL using data to make QR code and simplify scan on mobile devices
+```c++
+std::string totp::generateQR_URL(std::string secret, std::string username, std::string issuer, std::string application = "");
+```
+Generate QR code URL
 
 ```c++
 int totp::time_until_new_period(int period);
