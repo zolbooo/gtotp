@@ -37,7 +37,11 @@ std::string totp::generateTOTP(std::string secret, int period, int digits) {
     return result;
 }
 std::string totp::generateURL(std::string secret, std::string username, std::string issuer, std::string application) {
-    return "otpauth://totp/" + (application.empty() ? issuer : application) + ":%2520" + username + "?secret=" + secret + "&issuer=" + issuer;
+    return "otpauth://totp/" + (application.empty() ? issuer : application) + ": " + username + "?secret=" + secret + "&issuer=" + issuer;
+}
+
+std::string generateQR_URL(std::string secret, std::string username, std::string issuer, std::string application = "") {
+    return "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=otpauth://totp/" + (application.empty() ? issuer : application) + ":%2520" + username + "?secret=" + secret + "&issuer=" + issuer;
 }
 
 int totp::time_until_new_period(int period) {
